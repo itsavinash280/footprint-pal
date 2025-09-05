@@ -3,7 +3,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Badge } from '@/components/ui/badge';
-import { Leaf, Car, Zap, Utensils, Trash2, Target, TrendingDown, Award } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Leaf, Car, Zap, Utensils, Trash2, Target, TrendingDown, Award, Edit3 } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 interface DashboardProps {
@@ -13,8 +15,28 @@ interface DashboardProps {
 
 const CarbonDashboard: React.FC<DashboardProps> = ({ onVoiceToggle, isListening }) => {
   const [todayFootprint, setTodayFootprint] = useState(8.2);
-  const [weeklyGoal] = useState(50);
+  const [weeklyGoal, setWeeklyGoal] = useState(50);
   const [weeklyProgress, setWeeklyProgress] = useState(32.4);
+  const [newGoal, setNewGoal] = useState('');
+  const [isGoalDialogOpen, setIsGoalDialogOpen] = useState(false);
+
+  // Load weekly goal from localStorage on component mount
+  useEffect(() => {
+    const savedGoal = localStorage.getItem('weeklyGoal');
+    if (savedGoal) {
+      setWeeklyGoal(parseFloat(savedGoal));
+    }
+  }, []);
+
+  const handleGoalUpdate = () => {
+    const goalValue = parseFloat(newGoal);
+    if (goalValue && goalValue > 0) {
+      setWeeklyGoal(goalValue);
+      localStorage.setItem('weeklyGoal', goalValue.toString());
+      setIsGoalDialogOpen(false);
+      setNewGoal('');
+    }
+  };
 
   const weeklyData = [
     { day: 'Mon', footprint: 7.2 },
@@ -66,9 +88,46 @@ const CarbonDashboard: React.FC<DashboardProps> = ({ onVoiceToggle, isListening 
 
         <Card className="shadow-card">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="w-5 h-5" />
-              Weekly Goal
+            <CardTitle className="flex items-center gap-2 justify-between">
+              <div className="flex items-center gap-2">
+                <Target className="w-5 h-5" />
+                Weekly Goal
+              </div>
+              <Dialog open={isGoalDialogOpen} onOpenChange={setIsGoalDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="ghost" size="sm">
+                    <Edit3 className="w-4 h-4" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>Set Weekly Carbon Goal</DialogTitle>
+                    <DialogDescription>
+                      Set your weekly carbon footprint goal in kg CO₂
+                    </DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4">
+                    <Input
+                      type="number"
+                      placeholder={`Current: ${weeklyGoal} kg`}
+                      value={newGoal}
+                      onChange={(e) => setNewGoal(e.target.value)}
+                    />
+                    <div className="flex gap-2">
+                      <Button onClick={handleGoalUpdate} className="flex-1">
+                        Update Goal
+                      </Button>
+                      <Button 
+                        variant="outline" 
+                        onClick={() => setIsGoalDialogOpen(false)}
+                        className="flex-1"
+                      >
+                        Cancel
+                      </Button>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </CardTitle>
             <CardDescription>Stay under {weeklyGoal} kg this week</CardDescription>
           </CardHeader>
