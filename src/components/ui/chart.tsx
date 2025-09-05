@@ -126,7 +126,22 @@ const ChartTooltipContent = React.forwardRef<
       color,
       nameKey,
       labelKey,
-    },
+      ...props
+    }: {
+      active?: boolean;
+      payload?: any[];
+      className?: string;
+      indicator?: "line" | "dot" | "dashed";
+      hideLabel?: boolean;
+      hideIndicator?: boolean;
+      label?: any;
+      labelFormatter?: any;
+      labelClassName?: string;
+      formatter?: any;
+      color?: string;
+      nameKey?: string;
+      labelKey?: string;
+    } & React.ComponentProps<"div">,
     ref
   ) => {
     const { config } = useChart()
@@ -147,7 +162,7 @@ const ChartTooltipContent = React.forwardRef<
       if (labelFormatter) {
         return (
           <div className={cn("font-medium", labelClassName)}>
-            {labelFormatter(value, payload)}
+            {labelFormatter(value as any, payload as any)}
           </div>
         )
       }
@@ -167,9 +182,9 @@ const ChartTooltipContent = React.forwardRef<
       labelKey,
     ])
 
-    if (!active || !payload?.length) {
-      return null
-    }
+  if (!active || !payload?.length) {
+    return null
+  }
 
     const nestLabel = payload.length === 1 && indicator !== "dot"
 
@@ -197,7 +212,7 @@ const ChartTooltipContent = React.forwardRef<
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload)
+                  formatter(item.value as any, item.name as any, item as any, index as any, item.payload as any)
                 ) : (
                   <>
                     {itemConfig?.icon ? (
@@ -258,10 +273,11 @@ const ChartLegend = RechartsPrimitive.Legend
 
 const ChartLegendContent = React.forwardRef<
   HTMLDivElement,
-  React.ComponentProps<"div"> &
-    Pick<RechartsPrimitive.LegendProps, "payload" | "verticalAlign"> & {
+  React.ComponentProps<"div"> & {
       hideIcon?: boolean
       nameKey?: string
+      payload?: any[]
+      verticalAlign?: "top" | "bottom"
     }
 >(
   (
@@ -270,7 +286,7 @@ const ChartLegendContent = React.forwardRef<
   ) => {
     const { config } = useChart()
 
-    if (!payload?.length) {
+    if (!payload || !Array.isArray(payload) || !payload.length) {
       return null
     }
 
@@ -283,7 +299,7 @@ const ChartLegendContent = React.forwardRef<
           className
         )}
       >
-        {payload.map((item) => {
+        {payload.map((item: any) => {
           const key = `${nameKey || item.dataKey || "value"}`
           const itemConfig = getPayloadConfigFromPayload(config, item, key)
 

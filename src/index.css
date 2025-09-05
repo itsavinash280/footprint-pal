@@ -2,41 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Carbon Footprint Tracker Design System - Nature-Inspired */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 150 30% 98%;
+    --foreground: 155 25% 15%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 155 25% 15%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 155 25% 15%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 145 70% 35%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 145 60% 45%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 140 40% 92%;
+    --secondary-foreground: 155 25% 15%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 140 30% 95%;
+    --muted-foreground: 155 15% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 165 50% 85%;
+    --accent-foreground: 155 25% 15%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --success: 120 60% 50%;
+    --success-foreground: 0 0% 98%;
 
-    --radius: 0.5rem;
+    --warning: 35 80% 55%;
+    --warning-foreground: 0 0% 98%;
+
+    --border: 140 25% 85%;
+    --input: 140 25% 92%;
+    --ring: 145 70% 35%;
+
+    --radius: 1rem;
+
+    /* Eco-friendly gradients */
+    --gradient-eco: linear-gradient(135deg, hsl(145 70% 35%), hsl(165 60% 45%));
+    --gradient-nature: linear-gradient(180deg, hsl(140 40% 92%), hsl(150 30% 98%));
+    --gradient-earth: linear-gradient(45deg, hsl(35 50% 60%), hsl(25 40% 50%));
+
+    /* Voice UI gradients */
+    --gradient-voice: linear-gradient(135deg, hsl(145 70% 35% / 0.1), hsl(165 60% 45% / 0.2));
+    --gradient-listening: linear-gradient(135deg, hsl(145 70% 35%), hsl(145 80% 25%));
+
+    /* Shadows for depth */
+    --shadow-soft: 0 4px 20px hsl(145 70% 35% / 0.1);
+    --shadow-glow: 0 0 30px hsl(145 70% 35% / 0.3);
+    --shadow-card: 0 8px 25px hsl(155 25% 15% / 0.08);
+
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+    --radius: 1rem;
 
     --sidebar-background: 0 0% 98%;
 
