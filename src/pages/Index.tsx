@@ -6,6 +6,7 @@ import { Leaf, BarChart3, Mic, Plus } from 'lucide-react';
 import CarbonDashboard from '@/components/dashboard/CarbonDashboard';
 import VoiceAssistant from '@/components/voice/VoiceAssistant';
 import ActivityLogger from '@/components/activity/ActivityLogger';
+import Navigation from '@/components/Navigation';
 import heroImage from '@/assets/hero-earth.jpg';
 import { toast } from '@/hooks/use-toast';
 
@@ -64,6 +65,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Navigation />
       {/* Hero Section */}
       <div 
         className="relative bg-gradient-nature py-16 px-4 text-center"
@@ -75,8 +77,8 @@ const Index = () => {
       >
         <div className="max-w-4xl mx-auto text-white">
           <div className="flex justify-center mb-6">
-            <Badge className="bg-white/20 text-white text-lg px-4 py-2">
-              <Leaf className="w-5 h-5 mr-2" />
+            <Badge className="bg-white/20 text-white text-lg px-4 py-2 animate-bounce-in">
+              <Leaf className="w-5 h-5 mr-2 animate-spin-slow" style={{ animationDuration: '8s' }} />
               Carbon Footprint Tracker
             </Badge>
           </div>
