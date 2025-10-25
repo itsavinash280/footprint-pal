@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Leaf, Car, Zap, Utensils, Trash2, Target, TrendingDown, Award, Edit3 } from 'lucide-react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area, PieChart, Pie, Cell, Legend } from 'recharts';
 
 interface DashboardProps {
   onVoiceToggle: () => void;
@@ -53,6 +53,22 @@ const CarbonDashboard: React.FC<DashboardProps> = ({ onVoiceToggle, isListening 
     { category: 'Energy', co2: 2.1, icon: Zap, color: 'text-primary' },
     { category: 'Food', co2: 1.5, icon: Utensils, color: 'text-success' },
     { category: 'Waste', co2: 0.4, icon: Trash2, color: 'text-muted-foreground' }
+  ];
+
+  // Pie chart data for daily breakdown
+  const dailyPieData = [
+    { name: 'Transport', value: 4.2, fill: 'hsl(35 80% 55%)' },
+    { name: 'Energy', value: 2.1, fill: 'hsl(145 70% 35%)' },
+    { name: 'Food', value: 1.5, fill: 'hsl(120 60% 50%)' },
+    { name: 'Waste', value: 0.4, fill: 'hsl(155 15% 50%)' }
+  ];
+
+  // Pie chart data for weekly breakdown
+  const weeklyPieData = [
+    { name: 'Transport', value: 29.4, fill: 'hsl(35 80% 55%)' },
+    { name: 'Energy', value: 14.7, fill: 'hsl(145 70% 35%)' },
+    { name: 'Food', value: 10.5, fill: 'hsl(120 60% 50%)' },
+    { name: 'Waste', value: 2.8, fill: 'hsl(155 15% 50%)' }
   ];
 
   const achievements = [
@@ -184,7 +200,68 @@ const CarbonDashboard: React.FC<DashboardProps> = ({ onVoiceToggle, isListening 
         </CardContent>
       </Card>
 
-      {/* Category Breakdown */}
+      {/* Category Breakdown Pie Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle>Daily Footprint Breakdown</CardTitle>
+            <CardDescription>Today's CO₂ emissions by category</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={dailyPieData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {dailyPieData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `${value} kg CO₂`} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+
+        <Card className="shadow-card">
+          <CardHeader>
+            <CardTitle>Weekly Footprint Breakdown</CardTitle>
+            <CardDescription>This week's CO₂ emissions by category</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={weeklyPieData}
+                  cx="50%"
+                  cy="50%"
+                  labelLine={false}
+                  label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                  outerRadius={80}
+                  fill="#8884d8"
+                  dataKey="value"
+                >
+                  {weeklyPieData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.fill} />
+                  ))}
+                </Pie>
+                <Tooltip formatter={(value) => `${value} kg CO₂`} />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Category Breakdown Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {categoryData.map((category) => (
           <Card key={category.category} className="shadow-card hover:shadow-soft transition-all">
