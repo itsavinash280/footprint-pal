@@ -7,7 +7,7 @@ import CarbonDashboard from '@/components/dashboard/CarbonDashboard';
 import VoiceAssistant from '@/components/voice/VoiceAssistant';
 import ActivityLogger from '@/components/activity/ActivityLogger';
 import Navigation from '@/components/Navigation';
-import heroImage from '@/assets/hero-earth.jpg';
+import heroImage from '@/assets/hero-nature.jpg';
 import { toast } from '@/hooks/use-toast';
 
 const Index = () => {
